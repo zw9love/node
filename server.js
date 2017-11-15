@@ -20,10 +20,14 @@
 
 
 /* express 框架*/
-
 let express = require('express');
+let bodyParser = require('body-parser');
+let treeify = require('treeify');
+// ./不能忽略
+let host = require('./web/host/index')
 let opn = require('opn') // 一个可以强制打开浏览器并跳转到指定 url 的插件
 let app = express();
+app.use(bodyParser.json());
 
 // 相当于拦截器
 app.all("*", function (req, res, next) {
@@ -34,29 +38,36 @@ app.all("*", function (req, res, next) {
 
 
 app.use(function (request, response, next) {
-
-    let json = {
-        "data": [],
-        "msg": "",
-        "status": 200
-    }
-
     if (request.method === 'POST') {
         switch (request.url) {
-            case '/':
-                json.msg = '首页'
-                response.send(JSON.stringify(json));
+            case '/host/get':
+                console.log('调用了/host/get接口')
+                host.getData('beeeye_host', response)
                 break
-            case '/about':
-                json.msg = '关于'
-                response.send(JSON.stringify(json));
+            case '/host/delete':
+                console.log('调用了/host/delete接口')
+                let ids = request.body.ids || null
+                host.deleteDataById('beeeye_host', ids, response)
+                break
+            case '/host/put':
+                console.log('调用了/host/put接口')
+                host.upDateData('beeeye_host', request.body, response)
+                break
+            case '/host/post':
+                console.log('调用了/host/post接口')
+                host.addData('beeeye_host', request.body, response)
                 break
             default:
-                json.msg = '不知道你要去哪'
+                console.log('有人瞎调用接口')
+                let json = {
+                    "data": [],
+                    "msg": "不知道你要去哪",
+                    "status": 200
+                }
                 response.send(JSON.stringify(json));
         }
     } else {
-        response.send('get请求你啥也看不到。')
+        response.send('get请求你就啥也看不到。')
     }
 
 });
@@ -67,5 +78,5 @@ let server = app.listen(9090, function () {
     let port = server.address().port
     let uri = 'http://localhost:' + port
     console.log("Listening at: http://localhost:" + port)
-    opn(uri)
+    // opn(uri)
 })
