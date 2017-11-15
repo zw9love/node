@@ -42,20 +42,20 @@ app.use(function (request, response, next) {
         switch (request.url) {
             case '/host/get':
                 console.log('调用了/host/get接口')
-                host.getData('beeeye_host', response)
+                host.getData(response)
                 break
             case '/host/delete':
                 console.log('调用了/host/delete接口')
                 let ids = request.body.ids || null
-                host.deleteDataById('beeeye_host', ids, response)
+                host.deleteDataById(ids, response)
                 break
             case '/host/put':
                 console.log('调用了/host/put接口')
-                host.upDateData('beeeye_host', request.body, response)
+                host.upDateData(request.body, response)
                 break
             case '/host/post':
                 console.log('调用了/host/post接口')
-                host.addData('beeeye_host', request.body, response)
+                host.addData(request.body, response)
                 break
             default:
                 console.log('有人瞎调用接口')
