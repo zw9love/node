@@ -2,11 +2,11 @@
   "name": "node",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "supervisor server.js"
+    "start": "node index.js",
+    "dev": "supervisor index.js"
   },
   "author": "zw9love",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "express": "^4.16.2",
     "mysql": "^2.15.0",
     "opn": "^5.1.0",
-    "treeify": "^1.0.1"
+    "treeify": "^1.0.1",
+    "util": "^0.10.3"
   }
 }

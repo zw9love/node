@@ -11,10 +11,10 @@ let databaseData = {
     password: '159357',
 }
 
-let {host,port,database,user,password} = databaseData
+let { host, port, database, user, password } = databaseData
 
 
-function connectDatabase(sql, successFn) {
+function connectDatabase(sql, successFn, errorFn) {
 
     let connection = mysql.createConnection({
         host: host,
@@ -26,11 +26,13 @@ function connectDatabase(sql, successFn) {
 
     connection.connect();
 
-    // let sql = `SELECT * FROM ${tableName}`;
-
     connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
+            // console.log(errorFn)
+            if (errorFn) {
+                errorFn()
+            }
             return;
         }
 

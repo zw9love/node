@@ -1,60 +1,52 @@
 let connectDatabase = require('../../dao/index')
-
-let json = {}
+let getJson = require('../../util/getJson')
 
 // 查询全部
-function getData(sql, successFn) {
+function getData(sql, successFn, errorFn) {
     connectDatabase(sql, (res) => {
-        json.data = res
-        json.msg = '数据获取成功'
-        json.status = 200
-        if(successFn){successFn(json)}
-    })
+        let json = getJson('', 200, res)
+        if (successFn) { successFn(json) }
+    }, errorFn)
 }
 
 // 通过host_ids删除
-function deleteDataById(sql, successFn) {
-    connectDatabase(sql, ({affectedRows}) => {
+function deleteData(sql, successFn, errorFn) {
+    connectDatabase(sql, ({ affectedRows }) => {
+        let json
         if (affectedRows > 0) {
-            json.data = ''
-            json.msg = '删除成功'
-            json.status = 200
+            json = getJson('删除成功', 200)
         } else {
-            json.data = ''
-            json.msg = '删除失败，你传的ids不对'
-            json.status = 404
+            json = getJson('删除失败', 404)
         }
-        if(successFn){successFn(json)}
-    })
+        if (successFn) { successFn(json) }
+    }, errorFn)
 }
 
 // 更新
-function upDateData(sql, successFn) {
-    connectDatabase(sql, ({affectedRows}) => {
+function upDateData(sql, successFn, errorFn) {
+    connectDatabase(sql, ({ affectedRows }) => {
+        let json
         if (affectedRows > 0) {
-            json.data = ''
-            json.msg = '修改成功'
-            json.status = 200
+            json = getJson('修改成功', 200)
         } else {
-            json.data = ''
-            json.msg = '修改失败'
-            json.status = 404
+            json = getJson('修改失败', 404)
         }
-        if(successFn){successFn(json)}
-    })
+        if (successFn) { successFn(json) }
+    }, errorFn)
 }
 
 // 增加
-function addData(sql, successFn) {
-    connectDatabase(sql, ({affectedRows}) => {
+function addData(sql, successFn, errorFn) {
+    connectDatabase(sql, ({ affectedRows }) => {
+        let json
         if (affectedRows > 0) {
-            json.data = ''
-            json.msg = '添加成功'
-            json.status = 200
+            json = getJson('添加成功', 200)
+        } else {
+            json = getJson('添加失败', 404)
         }
-        if(successFn){successFn(json)}
-    })
+        if (successFn) { successFn(json) }
+    }, errorFn)
 }
 
 // 输出
-module.exports = {getData, deleteDataById, upDateData, addData}
+module.exports = { getData, deleteData, upDateData, addData }
