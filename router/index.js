@@ -9,6 +9,11 @@ function route(app){
         next();
     });
 
+    /*
+        路由块
+    */
+
+    // host路由
     app.get('/host/delete/:ids', function (request, response, next) {
         let host_ids = request.params.ids || null
         host.deleteDataById(host_ids, response, next)
@@ -31,6 +36,11 @@ function route(app){
     app.post('/host/post', function (request, response, next) {
         host.addData(request.body, response, next)
     })
+
+
+    // 
+
+
 }
 
 exports = module.exports = route
