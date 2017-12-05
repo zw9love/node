@@ -11,6 +11,7 @@
   "author": "zw9love",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "body-parser": "^1.18.2",
     "connect-multiparty": "^2.1.0",
     "express": "^4.16.2",

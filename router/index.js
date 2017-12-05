@@ -3,6 +3,9 @@ let host = require('../web/host/index')
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
+
+
+
 function route(app){
     // 相当于拦截器
     app.all("*", function (req, res, next) {
@@ -23,6 +26,7 @@ function route(app){
     })
 
     app.post('/host/get', function (request, response, next) {
+        console.log('/host/get接口')
         let host_ids = request.body.host_ids || null
         host.getData(host_ids, response, next)
     })
